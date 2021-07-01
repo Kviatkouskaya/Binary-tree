@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Binary_tree
 {
@@ -24,6 +26,7 @@ namespace Binary_tree
                                      testDate.ToString(), Convert.ToString(rating));
             return stringBuilder.ToString();
         }
+
         internal int CompareTo(StudentInfo val)
         {
             if (studentName != val.studentName)
@@ -42,27 +45,40 @@ namespace Binary_tree
             }
             return 0;
         }
+
     }
-    class Node
+    class BinaryTreeNode<TNode> : IComparable<TNode> where TNode : IComparable<TNode>
     {
-        private Node parent;
-        private Node left;
-        private Node right;
-        public Node()
+        public BinaryTreeNode(TNode value)
         {
-
+            Value = value;
         }
-        public void Add()
+        public BinaryTreeNode<TNode> parent;
+        public BinaryTreeNode<TNode> Left { get; set; }
+        public BinaryTreeNode<TNode> Right { get; set; }
+        public TNode Value { get; private set; }
+        public int CompareTo(TNode other)
         {
-
+            return Value.CompareTo(other);
         }
-        public void Remove()
+        public int CompareNode(BinaryTreeNode<TNode> other)
         {
-
+            return Value.CompareTo(other.Value);
         }
-        public Node Search()
+        public void Add(BinaryTreeNode<TNode> son)
         {
-
+            if (parent == null)
+            {
+                parent = son;
+            }
+            else if (parent.CompareNode(son) >= 0)
+            {
+                Left = son;
+            }
+            else if (parent.CompareNode(son) < 0)
+            {
+                Right = son;
+            }
         }
     }
 
@@ -90,8 +106,18 @@ namespace Binary_tree
         }
         static void Main()
         {
-            StudentInfo student1 = InputStudent();
-            PrintStudent(student1);
+
+            // StudentInfo student1 = InputStudent();
+            // PrintStudent(student1);
+            BinaryTreeNode<int> node1 = new(5);
+            BinaryTreeNode<int> node2 = new(3);
+            BinaryTreeNode<int> node3 = new(8);
+            node1.Add(node1);
+            node1.Add(new BinaryTreeNode<int>(3));
+            node1.Add(new BinaryTreeNode<int>(8));
+            Console.WriteLine($"Left node: {node1.Left.Value}");
+            Console.WriteLine($"Right node: {node1.Right.Value}");
+
         }
     }
 }
