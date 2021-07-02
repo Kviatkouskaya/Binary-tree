@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Text;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Binary_tree
 {
-    class StudentInfo
+    class StudentInfo : IComparable<StudentInfo>
     {
         private readonly string studentName;
         private readonly string testName;
@@ -19,67 +18,50 @@ namespace Binary_tree
             testDate = d;
             rating = r;
         }
+
+        public int CompareTo(StudentInfo other)
+        {
+            //правильно реализовать
+            int value = studentName.CompareTo(other.studentName);
+            if (value == 0)
+            {
+
+            }
+            return value;
+        }
+
         public override string ToString()
         {
+            // IComparer<int>
             StringBuilder stringBuilder = new();
             stringBuilder.AppendJoin(' ', studentName, testName,
                                      testDate.ToString(), Convert.ToString(rating));
             return stringBuilder.ToString();
         }
-
-        internal int CompareTo(StudentInfo val)
-        {
-            if (studentName != val.studentName)
-            {
-                for (int i = 0; i < studentName.Length; i++)
-                {
-                    if (studentName[i] > val.studentName[i])
-                    {
-                        return -1;
-                    }
-                    else if (studentName[i] < val.studentName[i])
-                    {
-                        return 1;
-                    }
-                }
-            }
-            return 0;
-        }
-
     }
-    class BinaryTreeNode<TNode> : IComparable<TNode> where TNode : IComparable<TNode>
+
+    class BinaryTreeNode<T> : IComparable<BinaryTreeNode<T>> where T : IComparable<T>
     {
-        public BinaryTreeNode(TNode value)
+        public BinaryTreeNode(T value)
         {
             Value = value;
         }
-        public BinaryTreeNode<TNode> parent;
-        public BinaryTreeNode<TNode> Left { get; set; }
-        public BinaryTreeNode<TNode> Right { get; set; }
-        public TNode Value { get; private set; }
-        public int CompareTo(TNode other)
-        {
-            return Value.CompareTo(other);
-        }
-        public int CompareNode(BinaryTreeNode<TNode> other)
+        //public BinaryTreeNode<T> parent;
+        public BinaryTreeNode<T> Left { get; set; }
+        public BinaryTreeNode<T> Right { get; set; }
+        public T Value { get; private set; }
+        public int CompareTo(BinaryTreeNode<T> other)
         {
             return Value.CompareTo(other.Value);
         }
-        public void Add(BinaryTreeNode<TNode> son)
+        //переделать
+        public void Add(BinaryTreeNode<T> son)
         {
-            if (parent == null)
-            {
-                parent = son;
-            }
-            else if (parent.CompareNode(son) >= 0)
-            {
-                Left = son;
-            }
-            else if (parent.CompareNode(son) < 0)
-            {
-                Right = son;
-            }
+
         }
+        //удаление 
+        //поиск
+        //вывод на печать
     }
 
     class Program
@@ -106,17 +88,15 @@ namespace Binary_tree
         }
         static void Main()
         {
-
-            // StudentInfo student1 = InputStudent();
-            // PrintStudent(student1);
+            /*
             BinaryTreeNode<int> node1 = new(5);
-            BinaryTreeNode<int> node2 = new(3);
-            BinaryTreeNode<int> node3 = new(8);
             node1.Add(node1);
             node1.Add(new BinaryTreeNode<int>(3));
             node1.Add(new BinaryTreeNode<int>(8));
             Console.WriteLine($"Left node: {node1.Left.Value}");
             Console.WriteLine($"Right node: {node1.Right.Value}");
+            */
+            BinaryTreeNode<StudentInfo> student = new(InputStudent());
 
         }
     }
