@@ -18,35 +18,32 @@ namespace Binary_tree
             testDate = d;
             rating = r;
         }
-
         public int CompareTo(StudentInfo other)
         {
             //правильно реализовать
             int value = studentName.CompareTo(other.studentName);
             if (value == 0)
             {
-
+                if (testName == other.testName && testDate == other.testDate)
+                {
+                    return value;
+                }
+                return 1;
             }
             return value;
         }
-
         public override string ToString()
         {
-            // IComparer<int>
-            StringBuilder stringBuilder = new();
-            stringBuilder.AppendJoin(' ', studentName, testName,
-                                     testDate.ToString(), Convert.ToString(rating));
-            return stringBuilder.ToString();
+            return $"{studentName} {testName} {testDate} {Convert.ToString(rating)}";
         }
     }
 
-    class BinaryTreeNode<T> : IComparable<BinaryTreeNode<T>> where T : IComparable<T>
+    public class BinaryTreeNode<T> : IComparable<BinaryTreeNode<T>> where T : IComparable<T>
     {
         public BinaryTreeNode(T value)
         {
             Value = value;
         }
-        //public BinaryTreeNode<T> parent;
         public BinaryTreeNode<T> Left { get; set; }
         public BinaryTreeNode<T> Right { get; set; }
         public T Value { get; private set; }
@@ -55,10 +52,24 @@ namespace Binary_tree
             return Value.CompareTo(other.Value);
         }
         //переделать
-        public void Add(BinaryTreeNode<T> son)
+        public void Add(T son)
         {
-
+            if (Value.CompareTo(son) < 0)
+            {
+                if (Left == null)
+                {
+                    Left = new(son);
+                }
+            }
+            else if (Value.CompareTo(son) > 0)
+            {
+                if (Right == null)
+                {
+                    Right = new(son);
+                }
+            }
         }
+
         //удаление 
         //поиск
         //вывод на печать
