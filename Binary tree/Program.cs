@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Binary_tree
 {
-    class StudentInfo : IComparable<StudentInfo>
+    public class StudentInfo : IComparable<StudentInfo>
     {
         private readonly string studentName;
         private readonly string testName;
@@ -20,15 +19,15 @@ namespace Binary_tree
         }
         public int CompareTo(StudentInfo other)
         {
-            //правильно реализовать
             int value = studentName.CompareTo(other.studentName);
             if (value == 0)
             {
-                if (testName == other.testName && testDate == other.testDate)
+                int testCompare = testName.CompareTo(other.testName);
+                if (testCompare == 0)
                 {
-                    return value;
+                    return testDate.CompareTo(other.testDate);
                 }
-                return 1;
+                return testCompare;
             }
             return value;
         }
@@ -51,28 +50,49 @@ namespace Binary_tree
         {
             return Value.CompareTo(other.Value);
         }
-        //переделать
         public void Add(T son)
         {
-            if (Value.CompareTo(son) < 0)
+            if (Value.CompareTo(son) > 0)
             {
                 if (Left == null)
                 {
                     Left = new(son);
                 }
+                else if (Left != null)
+                {
+                    Left.Add(son);
+                }
             }
-            else if (Value.CompareTo(son) > 0)
+            else if (Value.CompareTo(son) < 0)
             {
                 if (Right == null)
                 {
                     Right = new(son);
                 }
+                else if (Right != null)
+                {
+                    Right.Add(son);
+                }
             }
+        }
+        //TODO: StringBuilder
+        public override string ToString()
+        {
+            string line = string.Empty;
+            if (Left != null)
+            {
+                line += Left.ToString();
+            }
+            line += Value.ToString() + "\n";
+            if (Right != null)
+            {
+                line += Right.ToString();
+            }
+            return line;
         }
 
         //удаление 
         //поиск
-        //вывод на печать
     }
 
     class Program
@@ -99,16 +119,14 @@ namespace Binary_tree
         }
         static void Main()
         {
-            /*
-            BinaryTreeNode<int> node1 = new(5);
-            node1.Add(node1);
-            node1.Add(new BinaryTreeNode<int>(3));
-            node1.Add(new BinaryTreeNode<int>(8));
-            Console.WriteLine($"Left node: {node1.Left.Value}");
-            Console.WriteLine($"Right node: {node1.Right.Value}");
-            */
-            BinaryTreeNode<StudentInfo> student = new(InputStudent());
+            StudentInfo student1 = new("Vit", "Test1", DateTime.Parse("2021-06-21"), 1);
+            StudentInfo student2 = new("Vol", "Test2", DateTime.Parse("2021-06-21"), 2);
+            StudentInfo student3 = new("Alex", "Test1", DateTime.Parse("2021-06-21"), 1);
 
+            BinaryTreeNode<StudentInfo> tree = new(student1);
+            tree.Add(student2);
+            tree.Add(student3);
+            Console.WriteLine(tree);
         }
     }
 }
