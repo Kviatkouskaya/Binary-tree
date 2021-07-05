@@ -41,6 +41,34 @@ namespace BinaryTreeTest
             node1.Add(n2);
             Assert.IsTrue(node1.Value == n && node1.Right.Value == n1 && node1.Right.Right.Value == n2);
         }
+
+        [DataRow(1, 3, 4, 2, 5, 1)]
+        [DataRow(3, 4, 5, 6, 7, 5)]
+        [DataRow(6, 7, 5, 9, 10, 10)]
+        [TestMethod]
+        public void SearchNode(int n, int n1, int n2, int n3, int n4, int searching)
+        {
+            BinaryTreeNode<int> node = new(n);
+            node.Add(n1);
+            node.Add(n2);
+            node.Add(n3);
+            node.Add(n4);
+            Assert.IsTrue(node.Search(searching));
+        }
+
+        [DataRow(1, 3, 4, 2, 5, 10)]
+        [DataRow(3, 4, 5, 6, 7, 2)]
+        [DataRow(6, 7, 5, 9, 10, 4)]
+        [TestMethod]
+        public void SearchNodeFalse(int n, int n1, int n2, int n3, int n4, int searching)
+        {
+            BinaryTreeNode<int> node = new(n);
+            node.Add(n1);
+            node.Add(n2);
+            node.Add(n3);
+            node.Add(n4);
+            Assert.IsFalse(node.Search(searching));
+        }
     }
 
     [TestClass]
@@ -64,9 +92,9 @@ namespace BinaryTreeTest
                           node.Left.Value.CompareTo(student2) == 0 &&
                           node.Right.Value.CompareTo(student3) == 0);
         }
-       // [DataRow("Vit", "Test1", "2021-06-21", 1, "Val", "Test2", "2021-06-21", 2, "Val", "Test1", "2021-06-21", 1)]
-        [DataRow("Vit", "Test1", "2021-06-21", 1, "Val", "Test2", "2021-06-21", 2, "Zidan", "Test1", "2021-06-21", 1)]
-        [DataRow("Val", "Test6", "2021-06-21", 1, "Val", "Test2", "2021-06-21", 2, "Val", "Test7", "2021-06-21", 1)]
+        [DataRow("Vit", "Test1", "2021-06-21", 1, "Val", "Test2", "2021-06-21", 2, "Val", "Test1", "2021-06-21", 1)]
+        [DataRow("Vit", "Test1", "2021-06-21", 1, "Val", "Test2", "2021-06-21", 2, "Jeff", "Test1", "2021-06-21", 1)]
+        [DataRow("Val", "Test6", "2021-06-21", 1, "Vit", "Test2", "2021-06-21", 2, "Vol", "Test7", "2021-06-21", 1)]
         [TestMethod]
         public void SearchTreeNodes(string nSt, string tN, string date, int r,
                                    string nSt1, string tN1, string date1, int r1,
@@ -115,5 +143,6 @@ namespace BinaryTreeTest
             node.Add(student3);
             Assert.IsTrue(node.Search(student3));
         }
+
     }
 }

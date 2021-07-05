@@ -82,15 +82,17 @@ namespace Binary_tree
         }
         public bool Search(T son)
         {
-            if (Value == null)
+            if (Value.CompareTo(son) == 0)
             {
-                return false;
+                return true;
             }
-            switch (Value.CompareTo(son))
+            else if (Right != null)
             {
-                case 0: return true;
-                case 1: return Left.Search(son);
-                case -1: return Right.Search(son);
+                return Right.Search(son);
+            }
+            else if (Left != null)
+            {
+                return Left.Search(son);
             }
             return false;
         }
@@ -110,6 +112,7 @@ namespace Binary_tree
         }
 
         //удаление 
+        //поиск
     }
 
     class Program
