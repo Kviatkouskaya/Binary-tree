@@ -64,11 +64,11 @@ namespace BinaryTreeTest
                           node.Left.Value.CompareTo(student2) == 0 &&
                           node.Right.Value.CompareTo(student3) == 0);
         }
+       // [DataRow("Vit", "Test1", "2021-06-21", 1, "Val", "Test2", "2021-06-21", 2, "Val", "Test1", "2021-06-21", 1)]
         [DataRow("Vit", "Test1", "2021-06-21", 1, "Val", "Test2", "2021-06-21", 2, "Zidan", "Test1", "2021-06-21", 1)]
-        [DataRow("Vit", "Test1", "2021-06-21", 1, "Val", "Test2", "2021-06-21", 2, "Zidan", "Test1", "2021-06-21", 1)]
-        [DataRow("Vit", "Test1", "2021-06-21", 1, "Val", "Test2", "2021-06-21", 2, "Zidan", "Test1", "2021-06-21", 1)]
+        [DataRow("Val", "Test6", "2021-06-21", 1, "Val", "Test2", "2021-06-21", 2, "Val", "Test7", "2021-06-21", 1)]
         [TestMethod]
-        public void SearchTwoNodes(string nSt, string tN, string date, int r,
+        public void SearchTreeNodes(string nSt, string tN, string date, int r,
                                    string nSt1, string tN1, string date1, int r1,
                                    string nSt2, string tN2, string date2, int r2)
         {
@@ -78,7 +78,7 @@ namespace BinaryTreeTest
             StudentInfo student3 = new(nSt2, tN2, System.DateTime.Parse(date2), r2);
             node.Add(student2);
             node.Add(student3);
-            Assert.IsTrue(node.Search(student2) && node.Search(student3));
+            Assert.IsTrue(node.Search(student1) && node.Search(student2) && node.Search(student3));
         }
 
         [DataRow("Alex5", "Test1", "2021-06-21", 1, "Alex4", "Test2", "2021-06-21", 2, "Alex2", "Test1", "2021-06-21", 1)]

@@ -82,6 +82,16 @@ namespace Binary_tree
         }
         public bool Search(T son)
         {
+            if (Value == null)
+            {
+                return false;
+            }
+            switch (Value.CompareTo(son))
+            {
+                case 0: return true;
+                case 1: return Left.Search(son);
+                case -1: return Right.Search(son);
+            }
             return false;
         }
         public override string ToString()
@@ -100,7 +110,6 @@ namespace Binary_tree
         }
 
         //удаление 
-        //поиск
     }
 
     class Program
