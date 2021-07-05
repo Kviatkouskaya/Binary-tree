@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -75,20 +76,27 @@ namespace Binary_tree
                 }
             }
         }
-        //TODO: StringBuilder
+        public void Remove(T son)
+        {
+
+        }
+        public bool Search(T son)
+        {
+            return false;
+        }
         public override string ToString()
         {
-            string line = string.Empty;
+            StringBuilder builder = new();
             if (Left != null)
             {
-                line += Left.ToString();
+                builder.Append(Left.ToString());
             }
-            line += Value.ToString() + "\n";
+            builder.Append(Value.ToString() + " \n");
             if (Right != null)
             {
-                line += Right.ToString();
+                builder.Append(Right.ToString());
             }
-            return line;
+            return builder.ToString();
         }
 
         //удаление 
