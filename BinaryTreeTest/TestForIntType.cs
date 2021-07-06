@@ -69,6 +69,34 @@ namespace BinaryTreeTest
             node.Add(n4);
             Assert.IsFalse(node.Search(searching));
         }
+
+        [DataRow(4, 3, 7, 9, 1, 1)]
+        [DataRow(5, 6, 7, 8, 2, 2)]
+        [DataRow(6, 2, 3, 4, 7, 7)]
+        [TestMethod]
+        public void RemoveIntLeaf(int a, int a1, int a2, int a3, int a4, int removing)
+        {
+            BinaryTreeNode<int> node = new(a);
+            node.Add(a1);
+            node.Add(a2);
+            node.Add(a3);
+            node.Add(a4);
+            Assert.IsTrue(node.Remove(removing));
+        }
+
+        [DataRow(4, 3, 7, 9, 1, 7)]
+        [DataRow(5, 6, 7, 8, 2, 6)]
+        [DataRow(6, 2, 3, 4, 7, 4)]
+        [TestMethod]
+        public void RemoveIntMiddle(int a, int a1, int a2, int a3, int a4, int removing)
+        {
+            BinaryTreeNode<int> node = new(a);
+            node.Add(a1);
+            node.Add(a2);
+            node.Add(a3);
+            node.Add(a4);
+            Assert.IsTrue(node.Remove(removing));
+        }
     }
 
     [TestClass]
@@ -144,5 +172,21 @@ namespace BinaryTreeTest
             Assert.IsTrue(node.Search(student3));
         }
 
+        [DataRow("Alex5", "Test1", "2021-06-21", 1, "Alex6", "Test2", "2021-06-21", 2, "Alex8", "Test1", "2021-06-21", 1)]
+        [DataRow("Jack", "Test2", "2021-06-21", 2, "John", "Test3", "2021-06-21", 3, "Bob", "Test2", "2021-06-21", 5)]
+        [DataRow("John", "Test4", "2021-06-21", 5, "John", "Test5", "2021-06-21", 1, "Alex", "Test6", "2021-06-21", 2)]
+        [TestMethod]
+        public void SearchRoot(string nSt, string tN, string date, int r,
+                                   string nSt1, string tN1, string date1, int r1,
+                                   string nSt2, string tN2, string date2, int r2)
+        {
+            StudentInfo student1 = new(nSt, tN, System.DateTime.Parse(date), r);
+            BinaryTreeNode<StudentInfo> node = new(student1);
+            StudentInfo student2 = new(nSt1, tN1, System.DateTime.Parse(date1), r1);
+            StudentInfo student3 = new(nSt2, tN2, System.DateTime.Parse(date2), r2);
+            node.Add(student2);
+            node.Add(student3);
+            Assert.IsTrue(node.Search(student3));
+        }
     }
 }

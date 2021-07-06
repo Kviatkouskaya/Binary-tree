@@ -78,21 +78,32 @@ namespace Binary_tree
         }
         public void Remove(T son)
         {
+            //вершина не имеет поддеревьев
 
+            //у вершины есть только правое или левое поддерево
+
+            //у вершины есть оба поддерева
         }
+
         public bool Search(T son)
         {
             if (Value.CompareTo(son) == 0)
             {
                 return true;
             }
-            else if (Right != null)
+            if (Value.CompareTo(son) > 0)
             {
-                return Right.Search(son);
+                if (Left != null)
+                {
+                    return Left.Search(son);
+                }
             }
-            else if (Left != null)
+            if (Value.CompareTo(son) < 0)
             {
-                return Left.Search(son);
+                if (Right != null)
+                {
+                    return Right.Search(son);
+                }
             }
             return false;
         }
@@ -110,9 +121,6 @@ namespace Binary_tree
             }
             return builder.ToString();
         }
-
-        //удаление 
-        //поиск
     }
 
     class Program
@@ -141,12 +149,17 @@ namespace Binary_tree
         {
             StudentInfo student1 = new("Vit", "Test1", DateTime.Parse("2021-06-21"), 1);
             StudentInfo student2 = new("Vol", "Test2", DateTime.Parse("2021-06-21"), 2);
-            StudentInfo student3 = new("Alex", "Test1", DateTime.Parse("2021-06-21"), 1);
+            StudentInfo student3 = new("Oleg", "Test3", DateTime.Parse("2021-06-21"), 1);
 
             BinaryTreeNode<StudentInfo> tree = new(student1);
             tree.Add(student2);
             tree.Add(student3);
             Console.WriteLine(tree);
+            Console.WriteLine(tree.Search(student3));
+            Console.WriteLine();
+            Console.WriteLine(student1);
+            Console.WriteLine(student2);
+            Console.WriteLine(student3);
         }
     }
 }
