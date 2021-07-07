@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Binary_tree
@@ -76,13 +75,54 @@ namespace Binary_tree
                 }
             }
         }
-        public void Remove(T son)
+        public bool Remove(T son)
         {
             //вершина не имеет поддеревьев
+            BinaryTreeNode<T> binarySonTree = new(son);
+            if (binarySonTree.Left == null && binarySonTree.Right == null)
+            {
+                if (Left.Value.CompareTo(son) == 0)
+                {
+                    Left = null;
+                }
+                if (Right.Value.CompareTo(son) == 0)
+                {
+                    Right = null;
+                }
+                return true;
+            }
+
+
+            return false;
 
             //у вершины есть только правое или левое поддерево
 
             //у вершины есть оба поддерева
+        }
+        private BinaryTreeNode<T> FindParentRoot(T son)
+        {
+            BinaryTreeNode<T> parent = default;
+            BinaryTreeNode<T> current = new(Value);
+            BinaryTreeNode<T> binarySon = new(son);
+            while (current != null)
+            {
+                int result = current.CompareTo(binarySon);
+                if (result > 0)
+                {
+                    parent = current;
+                    current = current.Left;
+                }
+                else if (result < 0)
+                {
+                    parent = current;
+                    current = current.Right;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return current;
         }
 
         public bool Search(T son)
@@ -155,11 +195,11 @@ namespace Binary_tree
             tree.Add(student2);
             tree.Add(student3);
             Console.WriteLine(tree);
-            Console.WriteLine(tree.Search(student3));
             Console.WriteLine();
-            Console.WriteLine(student1);
-            Console.WriteLine(student2);
-            Console.WriteLine(student3);
+            tree.Remove(student3);
+            Console.WriteLine(tree);
+
+
         }
     }
 }

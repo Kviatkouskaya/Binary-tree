@@ -70,23 +70,23 @@ namespace BinaryTreeTest
             Assert.IsFalse(node.Search(searching));
         }
 
-        [DataRow(4, 3, 7, 9, 1, 1)]
-        [DataRow(5, 6, 7, 8, 2, 2)]
-        [DataRow(6, 2, 3, 4, 7, 7)]
+        [DataRow(6, 7, 8, 9, 2)]
+        [DataRow(5, 6, 7, 8, 2)]
+        [DataRow(6, 2, 3, 4, 7)]
         [TestMethod]
-        public void RemoveIntLeaf(int a, int a1, int a2, int a3, int a4, int removing)
+        public void RemoveIntLeaf(int a, int a1, int a2, int a3, int a4)
         {
             BinaryTreeNode<int> node = new(a);
             node.Add(a1);
             node.Add(a2);
             node.Add(a3);
             node.Add(a4);
-            Assert.IsTrue(node.Remove(removing));
+            Assert.IsTrue(node.Remove(a4));
         }
 
         [DataRow(4, 3, 7, 9, 1, 7)]
         [DataRow(5, 6, 7, 8, 2, 6)]
-        [DataRow(6, 2, 3, 4, 7, 4)]
+        [DataRow(6, 2, 3, 7, 8, 7)]
         [TestMethod]
         public void RemoveIntMiddle(int a, int a1, int a2, int a3, int a4, int removing)
         {
@@ -95,7 +95,7 @@ namespace BinaryTreeTest
             node.Add(a2);
             node.Add(a3);
             node.Add(a4);
-            Assert.IsTrue(node.Remove(removing));
+            Assert.IsTrue(node.Remove(removing) && node.Search(removing));
         }
     }
 
