@@ -91,38 +91,12 @@ namespace Binary_tree
                 }
                 return true;
             }
-
-
-            return false;
-
             //у вершины есть только правое или левое поддерево
 
+
+
             //у вершины есть оба поддерева
-        }
-        private BinaryTreeNode<T> FindParentRoot(T son)
-        {
-            BinaryTreeNode<T> parent = default;
-            BinaryTreeNode<T> current = new(Value);
-            BinaryTreeNode<T> binarySon = new(son);
-            while (current != null)
-            {
-                int result = current.CompareTo(binarySon);
-                if (result > 0)
-                {
-                    parent = current;
-                    current = current.Left;
-                }
-                else if (result < 0)
-                {
-                    parent = current;
-                    current = current.Right;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            return current;
+            return false;
         }
 
         public bool Search(T son)
@@ -190,14 +164,15 @@ namespace Binary_tree
             StudentInfo student1 = new("Vit", "Test1", DateTime.Parse("2021-06-21"), 1);
             StudentInfo student2 = new("Vol", "Test2", DateTime.Parse("2021-06-21"), 2);
             StudentInfo student3 = new("Oleg", "Test3", DateTime.Parse("2021-06-21"), 1);
-
+            StudentInfo student4 = new("Zidan", "Test1", DateTime.Parse("2021-06-21"), 1);
             BinaryTreeNode<StudentInfo> tree = new(student1);
             tree.Add(student2);
             tree.Add(student3);
+            tree.Add(student4);
             Console.WriteLine(tree);
             Console.WriteLine();
-            tree.Remove(student3);
-            Console.WriteLine(tree);
+            // tree.Remove(student3);
+            Console.WriteLine(tree.FindParentRoot(student4, out _));
 
 
         }

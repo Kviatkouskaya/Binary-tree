@@ -84,6 +84,20 @@ namespace BinaryTreeTest
             Assert.IsTrue(node.Remove(a4));
         }
 
+        [DataRow(10, 6, 11, 5, 4, 7, 8, 11, 14, 13, 12, 15, 5)]
+        [DataRow(10, 6, 11, 5, 4, 7, 8, 11, 14, 13, 12, 15, 13)]
+        [DataRow(10, 6, 11, 5, 4, 7, 8, 11, 14, 13, 12, 15, 7)]
+        [TestMethod]
+        public void RemoveIntNodeWhithLeaf(int a, int a1, int a2, int a3, int a4,int a5,int a6,
+                                           int a7,int a8,int a9,int a10,int a11, int removing)
+        {
+            BinaryTreeNode<int> node = new(a);
+            node.Add(a1);       node.Add(a2);       node.Add(a3);       node.Add(a4);
+            node.Add(a5);       node.Add(a6);       node.Add(a7);       node.Add(a8);
+            node.Add(a9);       node.Add(a10);      node.Add(a11);
+            Assert.IsTrue(node.Remove(removing) && !node.Search(removing));
+        }
+
         [DataRow(4, 3, 7, 9, 1, 7)]
         [DataRow(5, 6, 7, 8, 2, 6)]
         [DataRow(6, 2, 3, 7, 8, 7)]
