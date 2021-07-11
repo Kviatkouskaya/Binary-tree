@@ -19,13 +19,13 @@ namespace Binary_tree
         }
         public int CompareTo(StudentInfo other)
         {
-            int value = studentName.CompareTo(other.studentName);
+            int value = rating.CompareTo(other.rating);
             if (value == 0)
             {
                 int testCompare = testName.CompareTo(other.testName);
                 if (testCompare == 0)
                 {
-                    return testDate.CompareTo(other.testDate);
+                    return studentName.CompareTo(other.studentName);
                 }
                 return testCompare;
             }
@@ -37,16 +37,17 @@ namespace Binary_tree
         }
     }
 
-    public class BinaryTreeNode<T> : IComparable<BinaryTreeNode<T>> where T : IComparable<T>
+    public class TreeNode<T> : IComparable<TreeNode<T>> where T : IComparable<T>
     {
-        public BinaryTreeNode(T value)
+        public TreeNode(T value)
         {
             Value = value;
         }
-        public BinaryTreeNode<T> Left { get; set; }
-        public BinaryTreeNode<T> Right { get; set; }
+        public TreeNode<T> Left { get; private set; }
+        public TreeNode<T> Right { get; private set; }
+        public TreeNode<T> Parent { get; private set; }
         public T Value { get; private set; }
-        public int CompareTo(BinaryTreeNode<T> other)
+        public int CompareTo(TreeNode<T> other)
         {
             return Value.CompareTo(other.Value);
         }
@@ -56,12 +57,13 @@ namespace Binary_tree
             {
                 if (Left == null)
                 {
-                    Left = new(son);
-                }
+                    Left = new(son);                        //в одной части присвоение, в другой вызов метода
+                }                                           // тернарный оператор невозможно применить
                 else if (Left != null)
                 {
                     Left.Add(son);
                 }
+                Left.Parent = this;
             }
             else if (Value.CompareTo(son) < 0)
             {
@@ -73,24 +75,17 @@ namespace Binary_tree
                 {
                     Right.Add(son);
                 }
+                Right.Parent = this;
             }
         }
         public bool Remove(T son)
         {
+            TreeNode<T> parentS = Search(son);
+            //проверка на существование в дереве
+            if (parentS == null) return false;
+
             //вершина не имеет поддеревьев
-            BinaryTreeNode<T> binarySonTree = new(son);
-            if (binarySonTree.Left == null && binarySonTree.Right == null)
-            {
-                if (Left.Value.CompareTo(son) == 0)
-                {
-                    Left = null;
-                }
-                if (Right.Value.CompareTo(son) == 0)
-                {
-                    Right = null;
-                }
-                return true;
-            }
+
             //у вершины есть только правое или левое поддерево
 
 
@@ -98,29 +93,27 @@ namespace Binary_tree
             //у вершины есть оба поддерева
             return false;
         }
-
-        public bool Search(T son)
+        public TreeNode<T> Search(T son)
         {
+            TreeNode<T> found = null;
             if (Value.CompareTo(son) == 0)
             {
-                return true;
+                found = this;
             }
-            if (Value.CompareTo(son) > 0)
+            else
             {
                 if (Left != null)
                 {
-                    return Left.Search(son);
+                    found = Left.Search(son);
                 }
-            }
-            if (Value.CompareTo(son) < 0)
-            {
-                if (Right != null)
+                if (found == null && Right != null)
                 {
                     return Right.Search(son);
                 }
             }
-            return false;
+            return found;
         }
+
         public override string ToString()
         {
             StringBuilder builder = new();
@@ -161,19 +154,19 @@ namespace Binary_tree
         }
         static void Main()
         {
-            StudentInfo student1 = new("Vit", "Test1", DateTime.Parse("2021-06-21"), 1);
-            StudentInfo student2 = new("Vol", "Test2", DateTime.Parse("2021-06-21"), 2);
-            StudentInfo student3 = new("Oleg", "Test3", DateTime.Parse("2021-06-21"), 1);
-            StudentInfo student4 = new("Zidan", "Test1", DateTime.Parse("2021-06-21"), 1);
-            BinaryTreeNode<StudentInfo> tree = new(student1);
+            StudentInfo student1 = new("Vit", "Test1", DateTime.Parse("2021-06-21"), 5);
+            StudentInfo student2 = new("Ben", "Test2", DateTime.Parse("2021-06-21"), 3);
+            StudentInfo student3 = new("Oleg", "Test3", DateTime.Parse("2021-06-21"), 6);
+            StudentInfo student4 = new("Zidan", "Test1", DateTime.Parse("2021-06-21"), 7);
+            TreeNode<StudentInfo> tree = new(student1);
             tree.Add(student2);
             tree.Add(student3);
             tree.Add(student4);
             Console.WriteLine(tree);
             Console.WriteLine();
-            // tree.Remove(student3);
-            Console.WriteLine(tree.FindParentRoot(student4, out _));
-
+            Console.WriteLine(student4);
+            Console.WriteLine(tree.Remove(student4));
+            Console.WriteLine(tree);
 
         }
     }
