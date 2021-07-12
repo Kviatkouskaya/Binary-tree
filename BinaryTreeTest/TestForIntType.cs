@@ -83,22 +83,22 @@ namespace BinaryTreeTest
             node.Add(a2);
             node.Add(a3);
             node.Add(a4);
-            bool result = node.Remove(a4);
-            Assert.IsTrue(result);
+            node.Remove(a4);
+            Assert.IsNull(node.Search(a4));
         }
-        /*
         [DataRow(10, 6, 11, 5, 4, 7, 8, 11, 14, 13, 12, 15, 5)]
         [DataRow(10, 6, 11, 5, 4, 7, 8, 11, 14, 13, 12, 15, 13)]
         [DataRow(10, 6, 11, 5, 4, 7, 8, 11, 14, 13, 12, 15, 7)]
         [TestMethod]
-        public void RemoveIntNodeWhithLeaf(int a, int a1, int a2, int a3, int a4,int a5,int a6,
-                                           int a7,int a8,int a9,int a10,int a11, int removing)
+        public void RemoveIntNodeWhithLeaf(int a, int a1, int a2, int a3, int a4, int a5, int a6,
+                                           int a7, int a8, int a9, int a10, int a11, int removing)
         {
-            BinaryTreeNode<int> node = new(a);
-            node.Add(a1);       node.Add(a2);       node.Add(a3);       node.Add(a4);
-            node.Add(a5);       node.Add(a6);       node.Add(a7);       node.Add(a8);
-            node.Add(a9);       node.Add(a10);      node.Add(a11);
-            Assert.IsTrue(node.Remove(removing) && !node.Search(removing));
+            TreeNode<int> node = new(a);
+            node.Add(a1); node.Add(a2); node.Add(a3); node.Add(a4);
+            node.Add(a5); node.Add(a6); node.Add(a7); node.Add(a8);
+            node.Add(a9); node.Add(a10); node.Add(a11);
+            node.Remove(removing);
+            Assert.IsNull(node.Search(removing));
         }
 
         [DataRow(4, 3, 7, 9, 1, 7)]
@@ -107,34 +107,34 @@ namespace BinaryTreeTest
         [TestMethod]
         public void RemoveIntMiddle(int a, int a1, int a2, int a3, int a4, int removing)
         {
-            BinaryTreeNode<int> node = new(a);
+            TreeNode<int> node = new(a);
             node.Add(a1);
             node.Add(a2);
             node.Add(a3);
             node.Add(a4);
-            Assert.IsTrue(node.Remove(removing) && node.Search(removing));
+            node.Remove(removing);
+            Assert.IsNull(node.Search(removing));
         }
-        */
     }
 
     [TestClass]
     public class TestForStudentInfoClass
     {
         [DataRow("Vit", "Test1", "2021-06-21", 2, "Val", "Test2", "2021-06-21", 1, "Zidan", "Test1", "2021-06-21", 3)]
-        [DataRow("Jack", "Test2", "2021-06-21", 6, "Bob", "Test3", "2021-06-21", 3, "Jeff", "Test2", "2021-06-21", 7)]
-        [DataRow("John", "Test4", "2021-06-21", 5, "Alice", "Test5", "2021-06-21", 1, "Victor", "Test2", "2021-06-21", 8)]
+        [DataRow("Jack", "Test2", "2021-06-21", 3, "Bob", "Test3", "2021-06-21", 2, "Jeff", "Test2", "2021-06-21", 8)]
+        [DataRow("John", "Test4", "2021-06-21", 6, "Alice", "Test3", "2021-06-21", 6, "Victor", "Test2", "2021-06-21", 10)]
         [TestMethod]
         public void AddTwoNodesRightLeft(string nSt, string tN, string date, int r,
                                          string nSt1, string tN1, string date1, int r1,
                                          string nSt2, string tN2, string date2, int r2)
         {
             StudentInfo student1 = new(nSt, tN, System.DateTime.Parse(date), r);
-            TreeNode<StudentInfo> node = new(student1);
             StudentInfo student2 = new(nSt1, tN1, System.DateTime.Parse(date1), r1);
             StudentInfo student3 = new(nSt2, tN2, System.DateTime.Parse(date2), r2);
+            TreeNode<StudentInfo> node = new(student1);
             node.Add(student2);
             node.Add(student3);
-            Assert.IsTrue(node.Value.CompareTo(student3) == 0 &&
+            Assert.IsTrue(node.Value.CompareTo(student1) == 0 &&
                           node.Left.Value.CompareTo(student2) == 0 &&
                           node.Right.Value.CompareTo(student3) == 0);
         }

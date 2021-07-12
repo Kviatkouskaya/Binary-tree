@@ -57,8 +57,8 @@ namespace Binary_tree
             {
                 if (Left == null)
                 {
-                    Left = new(son);                        //в одной части присвоение, в другой вызов метода
-                }                                           // тернарный оператор невозможно применить
+                    Left = new(son);
+                }
                 else if (Left != null)
                 {
                     Left.Add(son);
@@ -78,20 +78,43 @@ namespace Binary_tree
                 Right.Parent = this;
             }
         }
-        public bool Remove(T son)
+        public void Remove(T son)
         {
-            TreeNode<T> parentS = Search(son);
-            //проверка на существование в дереве
-            if (parentS == null) return false;
-
-            //вершина не имеет поддеревьев
-
-            //у вершины есть только правое или левое поддерево
-
-
-
-            //у вершины есть оба поддерева
-            return false;
+            TreeNode<T> found = Search(son);
+            found.PerformRemoval();
+        }
+        private TreeNode<T> PerformRemoval()
+        {
+            if (Left == null && Right == null)
+            {
+                Detach(null);
+            }
+            else if (Left == null || Right == null)
+            {
+                Detach(Left ?? Right);
+            }
+            else
+            {
+                TreeNode<T> leftLeaf = Right.FindMostLeft();
+                leftLeaf.PerformRemoval();
+                Detach(leftLeaf);
+                leftLeaf.Left = Left;
+                leftLeaf.Right = Right;
+            }
+            return this;
+        }
+        private void Detach(TreeNode<T> replacement)
+        {
+            if (Parent != null)
+            {
+                if (Parent.Left == this) Parent.Left = replacement;
+                if (Parent.Right == this) Parent.Right = replacement;
+            }
+        }
+        private TreeNode<T> FindMostLeft()
+        {
+            if (Left == null) return this;
+            else return Left.FindMostLeft();
         }
         public TreeNode<T> Search(T son)
         {
@@ -164,10 +187,15 @@ namespace Binary_tree
             tree.Add(student4);
             Console.WriteLine(tree);
             Console.WriteLine();
-            Console.WriteLine(student4);
-            Console.WriteLine(tree.Remove(student4));
-            Console.WriteLine(tree);
-
+            PrintStudent(tree.Search(student3).Value);
+            Console.WriteLine();
+            tree.Remove(student3);
+            TreeNode<StudentInfo> searchRes = tree.Search(student3);
+            if (searchRes == null)
+            {
+                Console.WriteLine("Element unfound!");
+                PrintStudent(student3);
+            }
         }
     }
 }
