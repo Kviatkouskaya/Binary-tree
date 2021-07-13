@@ -10,12 +10,12 @@ namespace Binary_tree
         private readonly string testName;
         private readonly DateTime testDate;
         private readonly int rating;
-        public StudentInfo(string sN, string tN, DateTime d, int r)
+        public StudentInfo(string studentName, string testName, DateTime testDate, int rating)
         {
-            studentName = sN;
-            testName = tN;
-            testDate = d;
-            rating = r;
+            this.studentName = studentName;
+            this.testName = testName;
+            this.testDate = testDate;
+            this.rating = rating;
         }
         public int CompareTo(StudentInfo other)
         {
@@ -59,7 +59,7 @@ namespace Binary_tree
                 {
                     Left = new(son);
                 }
-                else if (Left != null)
+                else
                 {
                     Left.Add(son);
                 }
@@ -71,7 +71,7 @@ namespace Binary_tree
                 {
                     Right = new(son);
                 }
-                else if (Right != null)
+                else
                 {
                     Right.Add(son);
                 }
@@ -89,7 +89,7 @@ namespace Binary_tree
             {
                 Detach(null);
             }
-            else if (Left == null || Right == null)
+            if (Left == null || Right == null)
             {
                 Detach(Left ?? Right);
             }
@@ -113,8 +113,7 @@ namespace Binary_tree
         }
         private TreeNode<T> FindMostLeft()
         {
-            if (Left == null) return this;
-            else return Left.FindMostLeft();
+            return Left == null ? this : Left.FindMostLeft();
         }
         public TreeNode<T> Search(T son)
         {
