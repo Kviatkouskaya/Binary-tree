@@ -20,16 +20,16 @@ namespace Binary_tree
         public int CompareTo(StudentInfo other)
         {
             int value = rating.CompareTo(other.rating);
-            if (value == 0)
+            if (value != 0)
             {
-                int testCompare = testName.CompareTo(other.testName);
-                if (testCompare == 0)
-                {
-                    return studentName.CompareTo(other.studentName);
-                }
-                return testCompare;
+                return value;
             }
-            return value;
+            int testCompare = testName.CompareTo(other.testName);
+            if (testCompare == 0)
+            {
+                return studentName.CompareTo(other.studentName);
+            }
+            return testCompare;
         }
         public override string ToString()
         {
@@ -53,30 +53,27 @@ namespace Binary_tree
         }
         public void Add(T son)
         {
-            if (Value.CompareTo(son) > 0)
+            var compareResult = Value.CompareTo(son);
+            if (compareResult == 0)
+            {
+                return;
+            }
+            if (compareResult > 0)
             {
                 if (Left == null)
                 {
                     Left = new(son);
                 }
-                else
-                {
-                    Left.Add(son);
-                }
+                Left.Add(son);
                 Left.Parent = this;
+                return;
             }
-            else if (Value.CompareTo(son) < 0)
+            if (Right == null)
             {
-                if (Right == null)
-                {
-                    Right = new(son);
-                }
-                else
-                {
-                    Right.Add(son);
-                }
-                Right.Parent = this;
+                Right = new(son);
             }
+            Right.Add(son);
+            Right.Parent = this;
         }
         public void Remove(T son)
         {
@@ -120,18 +117,15 @@ namespace Binary_tree
             TreeNode<T> found = null;
             if (Value.CompareTo(son) == 0)
             {
-                found = this;
+                return this;
             }
-            else
+            if (Left != null)
             {
-                if (Left != null)
-                {
-                    found = Left.Search(son);
-                }
-                if (found == null && Right != null)
-                {
-                    return Right.Search(son);
-                }
+                found = Left.Search(son);
+            }
+            if (found == null && Right != null)
+            {
+                return Right.Search(son);
             }
             return found;
         }
