@@ -72,8 +72,11 @@ namespace Binary_tree
             {
                 Right = new(son);
             }
-            Right.Add(son);
-            Right.Parent = this;
+            else
+            {
+                Right.Add(son);
+                Right.Parent = this;
+            }
         }
         public void Remove(T son)
         {
