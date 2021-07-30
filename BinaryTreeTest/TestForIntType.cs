@@ -72,9 +72,9 @@ namespace BinaryTreeTest
             Assert.IsTrue(result == null);
         }
 
-        [DataRow(6, 7, 8, 9, 2)]
+        [DataRow(6, 7, 8, 9, 9)]
         [DataRow(5, 6, 7, 8, 2)]
-        [DataRow(6, 2, 3, 4, 7)]
+        [DataRow(6, 2, 3, 4, 4)]
         [TestMethod]
         public void RemoveIntLeaf(int a, int a1, int a2, int a3, int a4)
         {
