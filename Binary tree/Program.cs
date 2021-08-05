@@ -68,6 +68,10 @@ namespace Binary_tree
                 Left.Parent = this;
                 return;
             }
+            AddRight(son);
+        }
+        private void AddRight(T son)
+        {
             if (Right == null)
             {
                 Right = new(son);
