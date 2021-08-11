@@ -60,26 +60,25 @@ namespace Binary_tree
             }
             if (compareResult > 0)
             {
-                if (Left == null)
-                {
-                    Left = new(son);
-                }
-                Left.Add(son);
-                Left.Parent = this;
-                return;
-            }
-            AddRight(son);
-        }
-        private void AddRight(T son)
-        {
-            if (Right == null)
-            {
-                Right = new(son);
+                Left = AddNode(son, Left);
             }
             else
             {
-                Right.Add(son);
-                Right.Parent = this;
+                Right = AddNode(son, Right);
+            }
+        }
+        private TreeNode<T> AddNode(T son, TreeNode<T> node)
+        {
+            if (node == null)
+            {
+                node = new(son);
+                node.Parent = this;
+                return node;
+            }
+            else
+            {
+                node.Add(son);
+                return node;
             }
         }
         public void Remove(T son)
